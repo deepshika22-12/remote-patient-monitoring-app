@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Assistant - MyEasyPharma</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Additional styles for chat */
+    .chat-container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 100, 0, 0.1);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      height: 70vh;
+    }
+
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      margin-bottom: 15px;
+      padding-right: 10px;
+    }
+
+    .message {
+      margin-bottom: 15px;
+      padding: 10px 15px;
+      border-radius: 20px;
+      max-width: 70%;
+      word-wrap: break-word;
+    }
+
+    .user-message {
+      background-color: #d4edda;
+      align-self: flex-end;
+      color: #155724;
+    }
+
+    .ai-message {
+      background-color: #f8d7da;
+      align-self: flex-start;
+      color: #721c24;
+    }
+
+    .chat-input-container {
+      display: flex;
+      gap: 10px;
+    }
+
+    #chat-input {
+      flex: 1;
+      padding: 10px;
+      border-radius: 20px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    #send-btn {
+      background-color: #006400;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo-title">
+      <img src="logo.png" alt="MyEasyPharma Logo" class="logo" />
+      <div class="app-name">MyEasyPharma</div>
+    </div>
+  </header>
+
+  <section class="dashboard">
+    <h2>AI Assistant 🤖</h2>
+    <p>Ask your health-related questions or get guidance from the AI assistant.</p>
+
+    <div class="chat-container">
+      <div id="chat-messages" class="chat-messages"></div>
+
+      <div class="chat-input-container">
+        <input
+          type="text"
+          id="chat-input"
+          placeholder="Type your message here..."
+          autocomplete="off"
+        />
+        <button id="send-btn">Send</button>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const chatMessages = document.getElementById('chat-messages');
+    const chatInput = document.getElementById('chat-input');
+    const sendBtn = document.getElementById('send-btn');
+
+    function addMessage(text, sender) {
+      const msgDiv = document.createElement('div');
+      msgDiv.classList.add('message');
+      msgDiv.classList.add(sender === 'user' ? 'user-message' : 'ai-message');
+      msgDiv.textContent = text;
+      chatMessages.appendChild(msgDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function getAIResponse(userText) {
+      // Placeholder AI response logic - replace with real AI API or logic
+      userText = userText.toLowerCase();
+      if (userText.includes('bmi')) {
+        return "To calculate your BMI, go to the BMI Calculator section.";
+      } else if (userText.includes('exercise')) {
+        return "Regular exercise helps maintain good health. Try to exercise at least 30 mins daily!";
+      } else if (userText.includes('sleep')) {
+        return "Good sleep is vital. Adults need 7-9 hours per night.";
+      } else {
+        return "Sorry, I don't have the answer to that yet. Try asking something else!";
+      }
+    }
+
+    function sendMessage() {
+      const userText = chatInput.value.trim();
+      if (!userText) return;
+
+      addMessage(userText, 'user');
+      chatInput.value = '';
+
+      // Simulate AI "thinking" delay
+      setTimeout(() => {
+        const aiResponse = getAIResponse(userText);
+        addMessage(aiResponse, 'ai');
+      }, 1000);
+    }
+
+    sendBtn.addEventListener('click', sendMessage);
+    chatInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') sendMessage();
+    });
+  </script>
+</body>
+</html>
