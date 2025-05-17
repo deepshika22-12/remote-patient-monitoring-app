@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Blood Sugar Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <div class="logo-title">
+      <img src="logo.png" alt="Logo" class="logo" />
+      <div class="app-name">MyEasyPharma</div>
+    </div>
+  </header>
+
+  <section class="tracker-section">
+    <h2>Blood Sugar Tracker</h2>
+    <p>Track your blood sugar levels regularly to maintain a healthy lifestyle.</p>
+
+    <form id="bloodSugarForm">
+      <label for="sugarLevel">Enter Blood Sugar Level (mg/dL):</label>
+      <input type="number" id="sugarLevel" required min="20" max="600" />
+      <label for="measurementTime">Time of Measurement:</label>
+      <select id="measurementTime" required>
+        <option value="">Select</option>
+        <option value="Fasting">Fasting</option>
+        <option value="Before Meal">Before Meal</option>
+        <option value="After Meal">After Meal</option>
+        <option value="Random">Random</option>
+      </select>
+      <button type="submit">Add Record</button>
+    </form>
+
+    <h3>Records</h3>
+    <ul id="recordsList"></ul>
+  </section>
+
+  <script>
+    const bloodSugarForm = document.getElementById('bloodSugarForm');
+    const recordsList = document.getElementById('recordsList');
+
+    bloodSugarForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const sugarLevel = document.getElementById('sugarLevel').value;
+      const measurementTime = document.getElementById('measurementTime').value;
+
+      const li = document.createElement('li');
+      li.textContent = `Level: ${sugarLevel} mg/dL - Time: ${measurementTime}`;
+      recordsList.appendChild(li);
+
+      bloodSugarForm.reset();
+    });
+  </script>
+</body>
+</html>
