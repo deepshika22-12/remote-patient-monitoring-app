@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Yoga & Meditation Tracker - MyEasyPharma</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <div class="logo-title">
+      <img src="logo.png" alt="MyEasyPharma Logo" class="logo" />
+      <div class="app-name">MyEasyPharma</div>
+    </div>
+  </header>
+
+  <section class="dashboard">
+    <h2>Yoga & Meditation Tracker</h2>
+    <p>🧘‍♀️ Track your daily yoga sessions and meditation practice to improve your physical and mental health.</p>
+
+    <div class="cards">
+      <div class="card">
+        <div style="font-size: 40px;">🧘‍♂️</div>
+        <h3>Yoga Session</h3>
+        <p>Log your yoga sessions, duration, and type of yoga practiced.</p>
+        <label for="yoga-duration">Duration (minutes):</label><br />
+        <input type="number" id="yoga-duration" min="0" placeholder="e.g., 30" /><br /><br />
+        <label for="yoga-type">Type of Yoga:</label><br />
+        <select id="yoga-type">
+          <option value="">Select type</option>
+          <option value="Hatha">Hatha</option>
+          <option value="Vinyasa">Vinyasa</option>
+          <option value="Ashtanga">Ashtanga</option>
+          <option value="Yin">Yin</option>
+          <option value="Restorative">Restorative</option>
+        </select>
+      </div>
+
+      <div class="card">
+        <div style="font-size: 40px;">🧘‍♀️</div>
+        <h3>Meditation Session</h3>
+        <p>Log your meditation time to help reduce stress and improve focus.</p>
+        <label for="meditation-duration">Duration (minutes):</label><br />
+        <input type="number" id="meditation-duration" min="0" placeholder="e.g., 15" />
+      </div>
+    </div>
+
+    <button id="save-btn" style="margin-top:20px; padding: 10px 20px; background-color: #006400; color: white; border: none; border-radius: 5px; cursor: pointer;">
+      Save Session
+    </button>
+
+    <p id="message" style="margin-top: 15px; font-weight: bold;"></p>
+  </section>
+
+  <script src="script.js"></script>
+  <script>
+    const saveBtn = document.getElementById('save-btn');
+    const message = document.getElementById('message');
+
+    saveBtn.addEventListener('click', () => {
+      const yogaDuration = document.getElementById('yoga-duration').value;
+      const yogaType = document.getElementById('yoga-type').value;
+      const meditationDuration = document.getElementById('meditation-duration').value;
+
+      if ((yogaDuration && yogaType) || meditationDuration) {
+        // For now just show a success message, you can extend to save data to localStorage or backend
+        message.textContent = 'Sessions saved successfully! Keep up the good work! 🧘‍♂️🧘‍♀️';
+        message.style.color = '#006400';
+
+        // Clear inputs after save
+        document.getElementById('yoga-duration').value = '';
+        document.getElementById('yoga-type').value = '';
+        document.getElementById('meditation-duration').value = '';
+      } else {
+        message.textContent = 'Please enter details for yoga or meditation session before saving.';
+        message.style.color = 'red';
+      }
+    });
+  </script>
+</body>
+</html>
