@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Profile Setup - MyEasyPharma</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1 class="logo-text">MyEasyPharma</h1>
+  </header>
+
+  <main>
+    <h2>Complete Your Profile</h2>
+    <form id="profile-form">
+      <label for="gender">Gender</label><br />
+      <select id="gender" name="gender" required>
+        <option value="" disabled selected>Select gender</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="other">Other</option>
+      </select><br /><br />
+
+      <label for="dob">Date of Birth</label><br />
+      <input type="date" id="dob" name="dob" required /><br /><br />
+
+      <label for="height">Height (cm)</label><br />
+      <input type="number" id="height" name="height" min="50" max="250" required /><br /><br />
+
+      <label for="weight">Weight (kg)</label><br />
+      <input type="number" id="weight" name="weight" min="20" max="300" required /><br /><br />
+
+      <label for="lifestyle">Lifestyle Activity Level</label><br />
+      <select id="lifestyle" name="lifestyle" required>
+        <option value="" disabled selected>Select lifestyle</option>
+        <option value="sedentary">Sedentary</option>
+        <option value="moderately_active">Moderately Active</option>
+        <option value="active">Active</option>
+      </select><br /><br />
+
+      <button type="submit">Save Profile</button>
+    </form>
+  </main>
+
+  <script>
+    // Load user basic info from localStorage (if needed)
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (!user) {
+      alert('Please sign up first!');
+      window.location.href = 'signup.html';
+    }
+
+    document.getElementById('profile-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const gender = document.getElementById('gender').value;
+      const dob = document.getElementById('dob').value;
+      const height = parseFloat(document.getElementById('height').value);
+      const weight = parseFloat(document.getElementById('weight').value);
+      const lifestyle = document.getElementById('lifestyle').value;
+
+      const profile = {
+        gender,
+        dob,
+        height,
+        weight,
+        lifestyle,
+      };
+
+      // Save profile info to localStorage
+      localStorage.setItem('profile', JSON.stringify(profile));
+
+      alert('Profile saved! You can now access the dashboard.');
+
+      // Redirect to dashboard/home page
+      window.location.href = 'index.html';
+    });
+  </script>
+</body>
+</html>
