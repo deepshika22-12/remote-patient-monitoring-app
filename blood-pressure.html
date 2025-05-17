@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Blood Pressure Monitor</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <div class="logo-title">
+      <img src="logo.png" alt="Logo" class="logo" />
+      <span class="app-name">MyEasyPharma</span>
+    </div>
+  </header>
+
+  <section class="dashboard">
+    <h2>Blood Pressure Monitor</h2>
+    <p>Enter your latest blood pressure readings:</p>
+
+    <form id="bpForm" onsubmit="evaluateBP(event)">
+      <label for="systolic">Systolic (mm Hg):</label><br />
+      <input type="number" id="systolic" min="50" max="250" required /><br /><br />
+
+      <label for="diastolic">Diastolic (mm Hg):</label><br />
+      <input type="number" id="diastolic" min="30" max="150" required /><br /><br />
+
+      <button type="submit">Check Blood Pressure Status</button>
+    </form>
+
+    <div id="bpResult" style="margin-top: 20px; font-weight: bold;"></div>
+  </section>
+
+  <script>
+    function evaluateBP(event) {
+      event.preventDefault();
+
+      const sys = parseInt(document.getElementById("systolic").value);
+      const dia = parseInt(document.getElementById("diastolic").value);
+      const resultDiv = document.getElementById("bpResult");
+
+      if (isNaN(sys) || isNaN(dia)) {
+        resultDiv.innerText = "Please enter valid systolic and diastolic values.";
+        return;
+      }
+
+      let status = "";
+      let advice = "";
+
+      // Blood Pressure categories based on American Heart Association
+      if (sys < 90 && dia < 60) {
+        status = "Low Blood Pressure (Hypotension)";
+        advice = "Consult your doctor if you feel dizzy or faint.";
+      } else if (sys <= 120 && dia <= 80) {
+        status = "Normal Blood Pressure";
+        advice = "Maintain a healthy lifestyle.";
+      } else if (sys <= 129 && dia < 80) {
+        status = "Elevated Blood Pressure";
+        advice = "Monitor regularly and consider lifestyle changes.";
+      } else if ((sys >= 130 && sys <= 139) || (dia >= 80 && dia <= 89)) {
+        status = "High Blood Pressure (Hypertension Stage 1)";
+        advice = "Consult your healthcare provider.";
+      } else if (sys >= 140 || dia >= 90) {
+        status = "High Blood Pressure (Hypertension Stage 2)";
+        advice = "Seek medical advice promptly.";
+      } else if (sys > 180 || dia > 120) {
+        status = "Hypertensive Crisis — Seek emergency care!";
+        advice = "Call emergency services immediately.";
+      } else {
+        status = "Unusual readings, please consult a healthcare professional.";
+      }
+
+      resultDiv.innerHTML = `<p>Status: <strong>${status}</strong></p><p>Advice: ${advice}</p>`;
+      document.getElementById("bpForm").reset();
+    }
+  </script>
+</body>
+</html>
