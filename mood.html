@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mood Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <div class="logo-title">
+      <img src="logo.png" alt="Logo" class="logo" />
+      <span class="app-name">MyEasyPharma</span>
+    </div>
+  </header>
+
+  <section class="dashboard">
+    <h2>How are you feeling today?</h2>
+
+    <form id="moodForm" onsubmit="submitMood(event)">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 15px; margin-bottom: 15px;">
+        <label><input type="radio" name="mood" value="😊 Happy" required> 😊<br/>Happy</label>
+        <label><input type="radio" name="mood" value="😔 Sad"> 😔<br/>Sad</label>
+        <label><input type="radio" name="mood" value="😡 Angry"> 😡<br/>Angry</label>
+        <label><input type="radio" name="mood" value="😌 Relaxed"> 😌<br/>Relaxed</label>
+        <label><input type="radio" name="mood" value="😰 Anxious"> 😰<br/>Anxious</label>
+        <label><input type="radio" name="mood" value="🥱 Tired"> 🥱<br/>Tired</label>
+        <label><input type="radio" name="mood" value="🤒 Sick"> 🤒<br/>Sick</label>
+        <label><input type="radio" name="mood" value="🤩 Excited"> 🤩<br/>Excited</label>
+      </div>
+
+      <label for="note">Optional Note:</label><br>
+      <textarea id="note" rows="4" style="width:100%; margin-bottom: 15px;" placeholder="Write anything you want to express..."></textarea>
+
+      <button type="submit">Save Mood</button>
+    </form>
+
+    <div id="mood-output" style="margin-top: 20px; font-weight: bold;"></div>
+  </section>
+
+  <script>
+    function submitMood(event) {
+      event.preventDefault();
+      const mood = document.querySelector('input[name="mood"]:checked').value;
+      const note = document.getElementById("note").value;
+
+      document.getElementById("mood-output").innerText =
+        `Mood saved: ${mood}\n${note ? "Note: " + note : ""}`;
+
+      document.getElementById("moodForm").reset();
+    }
+  </script>
+</body>
+</html>
