@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Heart Rate Monitor</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <div class="logo-title">
+      <img src="logo.png" alt="Logo" class="logo" />
+      <div class="app-name">MyEasyPharma</div>
+    </div>
+  </header>
+
+  <section class="tracker-section">
+    <h2>Heart Rate Monitor</h2>
+    <p>Track your heart rate for better cardiovascular health.</p>
+
+    <form id="heartRateForm">
+      <label for="heartRate">Enter your Heart Rate (beats per minute):</label>
+      <input type="number" id="heartRate" required min="40" max="200" />
+      <button type="submit">Add Record</button>
+    </form>
+
+    <h3>Records</h3>
+    <ul id="heartRateRecords"></ul>
+  </section>
+
+  <script>
+    const heartRateForm = document.getElementById('heartRateForm');
+    const heartRateRecords = document.getElementById('heartRateRecords');
+
+    heartRateForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const rate = document.getElementById('heartRate').value;
+
+      const li = document.createElement('li');
+      li.textContent = `Heart Rate: ${rate} bpm`;
+      heartRateRecords.appendChild(li);
+
+      heartRateForm.reset();
+    });
+  </script>
+</body>
+</html>
