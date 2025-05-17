@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sleep Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <div class="logo-title">
+      <img src="logo.png" alt="Logo" class="logo" />
+      <span class="app-name">MyEasyPharma</span>
+    </div>
+  </header>
+
+  <section class="dashboard">
+    <h2>Track Your Sleep</h2>
+
+    <form id="sleepForm" onsubmit="calculateSleep(event)">
+      <label for="sleepStart">Sleep Start Time:</label><br/>
+      <input type="time" id="sleepStart" required /><br/><br/>
+
+      <label for="sleepEnd">Wake Up Time:</label><br/>
+      <input type="time" id="sleepEnd" required /><br/><br/>
+
+      <label for="sleepNote">Optional Notes:</label><br/>
+      <textarea id="sleepNote" rows="4" style="width: 100%;" placeholder="How did you feel?"></textarea><br/><br/>
+
+      <button type="submit">Calculate Sleep</button>
+    </form>
+
+    <div id="sleepOutput" style="margin-top: 20px; font-weight: bold;"></div>
+  </section>
+
+  <script>
+    function calculateSleep(event) {
+      event.preventDefault();
+
+      const start = document.getElementById("sleepStart").value;
+      const end = document.getElementById("sleepEnd").value;
+      const note = document.getElementById("sleepNote").value;
+
+      if (!start || !end) {
+        alert("Please enter both start and wake up times.");
+        return;
+      }
+
+      const startDate = new Date(`1970-01-01T${start}:00`);
+      let endDate = new Date(`1970-01-01T${end}:00`);
+
+      // If end is earlier than start, assume next day
+      if (endDate <= startDate) {
+        endDate.setDate(endDate.getDate() + 1);
+      }
+
+      const diffMs = endDate - startDate;
+      const diffHrs = Math.floor(diffMs / (1000 * 60 * 60));
+      const diffMins = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+
+      let quality = "";
+      if (diffHrs >= 7) {
+        quality = "Great sleep! 😴";
+      } else if (diffHrs >= 5) {
+        quality = "Moderate sleep, try to get more rest.";
+      } else {
+        quality = "Poor sleep, consider improving your habits.";
+      }
+
+      let output = `You slept for ${diffHrs} hour(s) and ${diffMins} minute(s).\n${quality}`;
+      if (note.trim() !== "") {
+        output += `\nNote: ${note}`;
+      }
+
+      document.getElementById("sleepOutput").innerText = output;
+      document.getElementById("sleepForm").reset();
+    }
+  </script>
+</body>
+</html>
